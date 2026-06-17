@@ -10,8 +10,8 @@ Two-sample drug-target cis-Mendelian randomization using whole-blood cis-eQTL in
 
 All summary-level data publicly available from IEU OpenGWAS (https://gwas.mrcieu.ac.uk/):
 
-| Data | ID  | N   |
-| --- | --- | --- |
+| Data | ID | N |
+|------|----|---|
 | TNF eQTL (eQTLGen) | eqtl-a-ENSG00000232810 | 14,263 |
 | TNFRSF1A eQTL (eQTLGen) | eqtl-a-ENSG00000067182 | 31,684 |
 | CRP GWAS | ebi-a-GCST90029070 | 575,531 |
@@ -25,39 +25,41 @@ All summary-level data publicly available from IEU OpenGWAS (https://gwas.mrcieu
 
 ## Requirements
 
-* R >= 4.4.1
-* TwoSampleMR (>= 0.7.6)
-* ieugwasr
-* coloc (>= 5.2.3)
-* data.table
+- R >= 4.4.1
+- TwoSampleMR (>= 0.7.6)
+- ieugwasr
+- coloc (>= 5.2.3)
+- data.table
 
 ## Run
 
-    Rscript mr_analysis.R
+```bash
+Rscript mr_analysis.R
+```
 
 Output: console log with Wald ratio OR, 95% CI, P, and F-statistics for all channel-outcome pairs. Data fetched live from IEU OpenGWAS API.
 
 ## Instruments
 
-* **rs1121800** (TNF): chr6:31,535,074, T→A, beta=−0.2915, F=599.4. Within ±10kb of TNF. LD r²=0.025 with HLA-B27 tag (rs4349859).
-* **rs1800692** (TNFRSF1A): chr12:6,442,346, C→T, beta=−0.3700, F=974.4. Intronic cis-eQTL inside TNFRSF1A gene body.
+- **rs1121800** (TNF): chr6:31,535,074, T→A, beta=−0.2915, F=599.4. Within ±10kb of TNF. LD r²=0.025 with HLA-B27 tag (rs4349859).
+- **rs1800692** (TNFRSF1A): chr12:6,442,346, C→T, beta=−0.3700, F=974.4. Intronic cis-eQTL inside TNFRSF1A gene body.
 
 ## Analysis design
 
-* Primary: TNF cis-eQTL → AAU
-* Positive controls: AS, CD, RA (protective), MS (risk-direction)
-* Specificity outcomes: T2D, HTN
-* Colocalization performed separately (run_coloc.R)
+- Primary: TNF cis-eQTL → AAU
+- Positive controls: AS, CD, RA (protective), MS (risk-direction)
+- Specificity outcomes: T2D, HTN
+- Colocalization performed separately (run_coloc.R)
 
 ## Scripts
 
 | Script | Contents |
-| --- | --- |
+|--------|----------|
 | `mr_analysis.R` | Main cis-MR: Wald ratio for 7 outcomes × 2 channels |
 | `mr_crp_proxy.R` | CRP proxy channel (rs1800693) — qualitative only |
 | `mr_coloc.R` | Bayesian colocalization (TNFRSF1A + TNF/MHC regions) |
 | `mr_sensitivity.R` | Steiger directionality + bidirectional MR + HLA-B27 LD |
-| `mr_analysis.R` can be run as-is. Other scripts need local eQTL VCF files. |     |
+| `mr_analysis.R` can be run as-is. Other scripts need local eQTL VCF files. |
 
 ## Reference
 
